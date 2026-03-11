@@ -50,7 +50,7 @@ The more impactful the operation (plugin deploy, solution import, step registrat
 
 ## What This Plugin Covers
 
-This plugin covers **Dataverse / Power Platform development**: environments, solutions, tables, columns, forms, views, security roles, C# plugins, and CI/CD for solution deployment.
+This plugin covers **Dataverse / Power Platform development**: solutions, tables, columns, forms, views, and data operations (CRUD, bulk, analytics).
 
 It does **not** cover:
 
@@ -93,22 +93,17 @@ Each skill's frontmatter contains WHEN/DO NOT USE WHEN triggers that Claude uses
 | **metadata** | Create/modify tables, columns, relationships, forms, views via Web API |
 | **python-sdk** | Data CRUD, bulk ops, OData queries, file uploads, bulk import, data profiling, notebook analysis via Python SDK |
 | **solution** | Solution create/export/import/pack/unpack, post-import validation |
-| **security** | Add users, assign security roles |
-| **csharp-plugins** | Scaffold, build, register, deploy C# plugins |
-| **environment** | Create, list, select, delete Power Platform environments |
-| **cicd** | GitHub Actions workflow for auto-deploy on merge |
 | **mcp-configure** | Configure Dataverse MCP server for GitHub Copilot or Claude Code as part of `init` |
 
 ---
 
 ## Scripts
 
-The plugin ships two utility scripts in `scripts/`:
+The plugin ships utility scripts in `scripts/`:
 
 | Script | Purpose |
 | --- | --- |
 | `auth.py` | Azure Identity token/credential acquisition — used by all other scripts and the SDK |
-| `assign-user.py` | Add a user and assign a security role (PAC CLI fast path, SDK + Web API fallback) |
 | `enable-mcp-client.py` | Add the MCP Client ID to the list of allowed MCP clients in Dataverse |
 
 For data operations and post-import validation, use the Python SDK directly (inline in your own scripts). See the `python-sdk` skill for SDK patterns and the `solution` skill for validation queries.

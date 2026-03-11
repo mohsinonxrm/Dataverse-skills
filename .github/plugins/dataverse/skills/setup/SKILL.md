@@ -5,8 +5,7 @@ description: >
   USE WHEN: "install PAC CLI", "install tools", "command not found", "authenticate",
   "pac auth", "az login", "gh auth", "winget install", "setup machine",
   "missing tools", "new machine setup".
-  DO NOT USE WHEN: initializing a workspace/repo (use dataverse-init),
-  creating environments (use dataverse-environment).
+  DO NOT USE WHEN: initializing a workspace/repo (use dataverse-init).
 ---
 
 # Skill: Setup
@@ -72,7 +71,7 @@ pac auth create \
   --tenant <TENANT_ID>
 ```
 
-This requires a service principal in your dev tenant. To create one, see the `dataverse-cicd` skill, steps 1–3. Once created, record `CLIENT_ID`, `CLIENT_SECRET`, and `TENANT_ID` in `.env`. With service principal auth, no browser is ever needed.
+This requires a service principal in your dev tenant. Once created, record `CLIENT_ID`, `CLIENT_SECRET`, and `TENANT_ID` in `.env`. With service principal auth, no browser is ever needed.
 
 **Interactive user auth (corporate tenant or if no service principal yet)**
 

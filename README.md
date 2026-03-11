@@ -17,10 +17,10 @@ Available via [awesome-copilot](https://github.com/github/awesome-copilot) as th
 
 ## What's included
 
-- **10 skills** covering environment setup, metadata authoring, solution management, security, C# plugins, Python SDK, MCP configuration, CI/CD, and demo data
+- **7 skills** covering machine setup, workspace init, metadata authoring, solution management, Python SDK, MCP configuration, and demo data
 - **MCP server** configuration for Dataverse Web API access
-- **Scripts** for authentication, role assignment, and post-deployment validation
-- **Templates** for CLAUDE.md project files and CI/CD workflows
+- **Scripts** for authentication and MCP client enablement
+- **Templates** for CLAUDE.md project files
 
 ## Local development
 

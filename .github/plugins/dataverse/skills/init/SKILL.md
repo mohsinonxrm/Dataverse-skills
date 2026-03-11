@@ -5,8 +5,7 @@ description: >
   USE WHEN: ".env is missing", "setting up on a new machine", "starting a new project",
   "initialize workspace", "new repo", "first time setup", "configure MCP server",
   "MCP not connected", "load demo data", "sample data".
-  DO NOT USE WHEN: installing tools (use dataverse-setup),
-  creating environments (use dataverse-environment).
+  DO NOT USE WHEN: installing tools (use dataverse-setup).
 ---
 
 # Skill: Init
@@ -199,7 +198,6 @@ Copy plugin scripts into the repo so they're committed and available to teammate
 
 ```
 cp .dataverse/scripts/auth.py scripts/
-cp .dataverse/scripts/assign-user.py scripts/
 cp .dataverse/scripts/enable-mcp-client.py scripts/
 ```
 
@@ -251,11 +249,7 @@ Then write and run any scripts needed to create columns, tables, or other metada
 python scripts/add_<whatever>_column.py
 ```
 
-### 8. Build and deploy plugins
-
-If the project includes C# plugins, build and deploy them now. Follow the `dataverse-csharp-plugins` skill for the full sequence: generate strong-name key, build, register assembly and step via script. All of this goes into the environment. Do not commit the plugin DLL to git.
-
-### 9. Pull the environment state to the repo
+### 8. Pull the environment state to the repo
 
 **After all changes are live in the environment, pull them into the repo:**
 
@@ -265,7 +259,7 @@ pac solution unpack --zipfile ./solutions/<SOLUTION_NAME>.zip --folder ./solutio
 rm ./solutions/<SOLUTION_NAME>.zip
 ```
 
-### 10. Load demo data (optional)
+### 9. Load demo data (optional)
 
 If the user wants sample data for testing (accounts, contacts, opportunities), use the built-in Dataverse sample data feature:
 
@@ -306,7 +300,7 @@ else:
 
 To remove demo data later, call `UninstallSampleData` the same way.
 
-### 11. Commit
+### 10. Commit
 
 ```
 git add .gitignore CLAUDE.md solutions/ plugins/ scripts/
@@ -323,7 +317,7 @@ If the agent calls `list_tables` directly, MCP is connected. If it falls back to
 
 1. `.mcp.json` (Claude Code) or `.vscode/settings.json` (Copilot) exists and has correct values
 2. `CLIENT_ID`/`CLIENT_SECRET`/`TENANT_ID` in the config match a valid service principal
-3. The service principal has been granted access to the environment (see `dataverse-cicd` steps 1-4)
+3. The service principal has been granted access to the environment
 
 ### MCP Server Capabilities
 

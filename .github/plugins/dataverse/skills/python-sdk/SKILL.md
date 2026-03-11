@@ -143,7 +143,6 @@ Scripts using the SDK go in `/scripts/`. Keep them small and single-purpose:
 ```text
 scripts/
   auth.py              — Azure Identity token acquisition (used by all scripts)
-  assign-user.py       — user provisioning and role assignment
 ```
 
 Both the SDK and Web API scripts use Azure Identity for auth via `auth.py`. For Web API scripts (forms, views, relationships), use `get_token()`. For data scripts using this SDK, use `get_credential()` to get a `TokenCredential` directly.

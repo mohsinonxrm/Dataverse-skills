@@ -6,7 +6,7 @@ description: >
   "create view", "modify form", "FormXml", "SavedQuery", "option set", "picklist",
   "MetadataService", "EntityDefinitions".
   DO NOT USE WHEN: reading/writing data records (use dataverse-python-sdk),
-  exporting solutions (use dataverse-solution), managing users/roles (use dataverse-security).
+  exporting solutions (use dataverse-solution).
 ---
 
 # Skill: Metadata — Making Changes

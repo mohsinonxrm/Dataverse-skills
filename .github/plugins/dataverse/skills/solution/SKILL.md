@@ -5,8 +5,7 @@ description: >
   USE WHEN: "export solution", "import solution", "pack solution", "unpack solution", "create solution",
   "pull from environment", "push to environment", "validate import", "check import errors",
   "check if table exists", "check if form is published", "verify deployment".
-  DO NOT USE WHEN: creating tables/columns/forms/views (use dataverse-metadata),
-  managing users/roles (use dataverse-security), setting up CI/CD (use dataverse-cicd).
+  DO NOT USE WHEN: creating tables/columns/forms/views (use dataverse-metadata).
 ---
 
 # Skill: Solution
