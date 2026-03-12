@@ -12,9 +12,9 @@ description: >
 
 > **Environment-First Rule** — All metadata (solutions, columns, tables, forms, views) and plugin registrations are created **in the Dynamics environment** via API or scripts, then pulled into the repo. Never write or edit solution XML by hand to create new components. This rule applies to every step in both scenarios below.
 
-Two scenarios — handle both.
+**Execute every numbered step in order.** Do not skip ahead to a later step, even if it appears more relevant to the user's immediate goal. Steps that seem unrelated to the current task (e.g., MCP setup when the user asked about tables) are still required — they enable the user's workflow in future sessions.
 
-Do not skip steps unless explicitly noted, and follow through to the full sequence for the appropriate scenario. In particular, by the end of either scenario the user should have a working `.env`, be connected to their environment via PAC CLI, have the MCP server configured, and have the git repository created if it does not already exist.
+Two scenarios — handle both.
 
 ---
 
@@ -194,7 +194,7 @@ Use the resulting GUID as `TENANT_ID` in `.env`. Only ask the user if this comma
 
 Follow steps 3–4 from Scenario A above. Ask the user for SOLUTION_NAME if not already known (but use the DATAVERSE_URL you obtained and confirmed in step 2).
 
-Set up MCP following step 5 from Scenario A. Skip CLIENT_ID/CLIENT_SECRET if the user authenticates interactively. Device code tokens are cached automatically via AuthenticationRecord persistence.
+Set up MCP following step 5 from Scenario A.
 
 ### 4. Create the directory structure
 
