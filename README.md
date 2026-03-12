@@ -41,13 +41,13 @@ mkdir my-test-project
 cd my-test-project
 
 # 2. Launch Claude Code with the plugin loaded from your local clone
-claude --plugin-dir "c:/repos/PowerPlatform-Dataverse-Skills/.github/plugins/dataverse"
+claude --plugin-dir "c:/repos/Dataverse-Skills/.github/plugins/dataverse"
 
 # 3. Start with a natural language prompt, e.g.:
 #    "Create a support ticket table with customer and agent lookups"
 ```
 
-The `--plugin-dir` path **must be in double quotes** if it contains spaces or special characters. Use the absolute path to the plugin directory in your local clone.
+The `--plugin-dir` path **must be in double quotes** if it contains spaces or special characters. Use the absolute path to the plugin directory in your local clone of this repo.
 
 For GitHub Copilot:
 
