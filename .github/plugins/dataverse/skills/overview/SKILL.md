@@ -13,6 +13,55 @@ This skill provides cross-cutting context that no individual skill owns: tool ca
 
 ---
 
+## Hard Rules — Read These First
+
+These rules are non-negotiable. Violating any of them means the task is going off-rails.
+
+### 1. Python Only — No Exceptions
+
+All scripts, data operations, and automation MUST use **Python**. This plugin's entire toolchain — `scripts/auth.py`, the Dataverse SDK, all skill examples — is Python-based.
+
+**NEVER:**
+- Run `npm init`, `npm install`, or any Node.js/JavaScript tooling
+- Install packages via `npm`, `yarn`, or `pnpm`
+- Write scripts in JavaScript, TypeScript, PowerShell, or any language other than Python
+- Use `@azure/msal-node`, `@azure/identity`, or any Node.js Azure SDK
+- Import or reference `node_modules/`
+
+**ALWAYS:**
+- Use `pip install` for Python packages
+- Use `scripts/auth.py` for authentication tokens and credentials
+- Use the Python Dataverse SDK (`PowerPlatform-Dataverse-Client`) for data and schema operations
+- Use `azure-identity` (Python) for Azure credential flows
+
+If you find yourself about to run `npm` or create a `package.json`, STOP. You are going off-rails. Re-read the python-sdk skill.
+
+### 2. Follow the Init Flow
+
+When starting work in a new or empty directory, **always run the init flow first** (see the init skill). Do not skip steps or improvise your own setup sequence. The init skill exists to prevent exactly the kind of drift that happens when you "figure it out as you go."
+
+If the workspace already has a `.env` file with `DATAVERSE_URL` and `scripts/auth.py`, init is already done — proceed to the relevant task skill.
+
+### 3. Use Documented Auth Patterns
+
+Authentication is handled by `pac auth create` (for PAC CLI) and `scripts/auth.py` (for Python scripts and the SDK).
+
+**NEVER:**
+- Read or parse raw token cache files (e.g., `tokencache_msalv3.dat`)
+- Implement your own MSAL device-code flow
+- Hard-code tokens or credentials in scripts
+- Invent a new auth mechanism
+
+If auth is expired or missing, re-run `pac auth create` or check `.env` credentials. See the setup skill.
+
+### 4. Follow Skill Instructions, Don't Improvise
+
+Each skill documents a specific, tested sequence of steps. Follow them. If a skill says "use the Python SDK," use the Python SDK — do not substitute a raw HTTP call, a different library, or a different language. If a skill says "run this command," run that command — do not invent an alternative.
+
+If you hit a gap (something the skills don't cover), say so honestly and suggest a workaround. Do not hallucinate a path or improvise a solution using tools the skills don't mention.
+
+---
+
 ## UX Principle: Natural Language First
 
 Users should never need to invoke skills or slash commands directly. The intended workflow is:

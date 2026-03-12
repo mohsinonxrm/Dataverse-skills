@@ -12,6 +12,8 @@ description: >
 
 # Skill: Python SDK
 
+> **This skill uses Python exclusively.** Do not use Node.js, JavaScript, or any other language for Dataverse scripting. If you are about to run `npm install` or write a `.js` file, STOP — you are going off-rails. See the overview skill's Hard Rules.
+
 Use the official Microsoft Power Platform Dataverse Client Python SDK for data operations and basic table management in scripts and automation.
 
 **Official SDK:** https://github.com/microsoft/PowerPlatform-DataverseClient-Python
