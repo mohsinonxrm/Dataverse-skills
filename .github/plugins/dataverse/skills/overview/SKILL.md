@@ -14,6 +14,8 @@ description: >
 
 This skill provides cross-cutting context that no individual skill owns: tool capabilities, UX principles, and the skill index. Per-task routing is handled by each skill's WHEN/DO NOT USE WHEN frontmatter triggers — not duplicated here.
 
+> **Change philosophy:** Before modifying any skill or script, read the root `CLAUDE.md` — it defines how changes to this repo must be made (structural fixes over band-aids).
+
 ---
 
 ## Hard Rules — Read These First
@@ -115,6 +117,32 @@ Pro-dev scenarios involve multiple environments (dev, test, staging, prod) and m
 **Do not proceed until the user explicitly confirms.** This is the single most important safety check in the plugin. Skipping it risks making irreversible changes to the wrong environment.
 
 Once confirmed for a session, you do not need to re-confirm for every subsequent operation in the same session against the same environment.
+
+---
+
+## Structural Rules
+
+These are repo-wide rules that prevent entire classes of bugs. Each exists because a structural gap was identified — not because a specific incident needed a workaround. See root `CLAUDE.md` for the governing principle.
+
+### Path construction
+
+**Always use `pathlib.Path` / `os.path.join()`.** Never string concatenation or f-strings for paths. This one rule prevents all separator-related bugs across every script, config, and CLI argument.
+
+```python
+# WRONG
+path = f"{base_dir}.claude-plugin/marketplace.json"
+path = base_dir + "/.env"
+
+# RIGHT
+path = Path(base_dir) / ".claude-plugin" / "marketplace.json"
+path = Path(base_dir) / ".env"
+```
+
+Before writing any path: build with `Path /` operator, verify parent exists (`Path(p).parent.mkdir(parents=True, exist_ok=True)`), use `Path` objects — never assume `\` vs `/`.
+
+### Fail-fast on missing prerequisites
+
+Scripts must not silently proceed when a required file or config is missing. Use a shared entry point (e.g., `load_env()` from `auth.py`) that raises a clear error immediately. This replaces per-script `if not exists` checks with a single structural guarantee.
 
 ---
 

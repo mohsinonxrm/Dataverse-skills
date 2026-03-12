@@ -71,17 +71,22 @@ How to prompt the user:
 Write the file directly — do not instruct the user to create it:
 
 ```python
-# Write .env
-with open(".env", "w") as f:
-    f.write(f"DATAVERSE_URL={dataverse_url}\n")
-    f.write(f"TENANT_ID={tenant_id}\n")
-    f.write(f"SOLUTION_NAME={solution_name}\n")
-    f.write(f"PUBLISHER_PREFIX=\n")  # filled in during solution creation step
-    f.write(f"PAC_AUTH_PROFILE=nonprod\n")
-    if client_id:
-        f.write(f"CLIENT_ID={client_id}\n")
-    if client_secret:
-        f.write(f"CLIENT_SECRET={client_secret}\n")
+from pathlib import Path
+
+# Write .env — always use Path, never string concatenation for paths
+env_path = Path(".env")
+lines = [
+    f"DATAVERSE_URL={dataverse_url}",
+    f"TENANT_ID={tenant_id}",
+    f"SOLUTION_NAME={solution_name}",
+    "PUBLISHER_PREFIX=",  # filled in during solution creation step
+    "PAC_AUTH_PROFILE=nonprod",
+]
+if client_id:
+    lines.append(f"CLIENT_ID={client_id}")
+if client_secret:
+    lines.append(f"CLIENT_SECRET={client_secret}")
+env_path.write_text("\n".join(lines) + "\n")
 ```
 
 ### 4. Ensure sensitive files are gitignored
@@ -89,6 +94,8 @@ with open(".env", "w") as f:
 Write a comprehensive `.gitignore` that covers all credential and generated files:
 
 ```python
+from pathlib import Path
+
 GITIGNORE_ENTRIES = [
     ".env",
     ".vscode/settings.json",
@@ -102,10 +109,11 @@ GITIGNORE_ENTRIES = [
     "plugins/**/obj/",
 ]
 
-gitignore = open(".gitignore").read() if os.path.exists(".gitignore") else ""
+gitignore_path = Path(".gitignore")
+gitignore = gitignore_path.read_text() if gitignore_path.exists() else ""
 missing = [e for e in GITIGNORE_ENTRIES if e not in gitignore]
 if missing:
-    with open(".gitignore", "a") as f:
+    with gitignore_path.open("a") as f:
         f.write("\n" + "\n".join(missing) + "\n")
 ```
 
