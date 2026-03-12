@@ -13,7 +13,16 @@ Agent skills and MCP configuration for Microsoft Dataverse — works with Claude
 
 ### GitHub Copilot
 
-Available via [awesome-copilot](https://github.com/github/awesome-copilot) as the `dataverse` plugin.
+```
+copilot plugin marketplace add microsoft/Dataverse-skills
+copilot plugin install dataverse@microsoft/Dataverse-skills
+```
+
+Once the repo is publicly listed in [awesome-copilot](https://github.com/github/awesome-copilot), install simplifies to:
+
+```
+copilot plugin install dataverse@awesome-copilot
+```
 
 ## What's included
 
@@ -27,7 +36,11 @@ Available via [awesome-copilot](https://github.com/github/awesome-copilot) as th
 Test the plugin locally without installing from a marketplace:
 
 ```bash
+# Claude Code
 claude --plugin-dir ./.github/plugins/dataverse
+
+# GitHub Copilot
+copilot plugin install ./.github/plugins/dataverse
 ```
 
 ## Contributing

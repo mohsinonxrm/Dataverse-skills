@@ -1,0 +1,20 @@
+{
+  "name": "dataverse-skills",
+  "metadata": {
+    "description": "Official Dataverse plugin marketplace for agent-guided development",
+    "version": "1.0.0"
+  },
+  "owner": {
+    "name": "Microsoft",
+    "url": "https://www.microsoft.com"
+  },
+  "plugins": [
+    {
+      "name": "dataverse",
+      "description": "Dataverse and Power Platform developer tools. Covers machine setup, workspace init, metadata authoring, solution management, Python SDK, MCP server configuration, and demo data.",
+      "source": "./.github/plugins/dataverse",
+      "version": "1.0.0",
+      "homepage": "https://github.com/microsoft/Dataverse-skills"
+    }
+  ]
+}
