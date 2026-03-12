@@ -209,7 +209,7 @@ result = client.tables.create_lookup_field(
     display_name="Account",
     solution="MySolution",
 )
-print(f"Created lookup: {result['lookup_schema_name']}")
+print(f"Created lookup: {result.lookup_schema_name}")
 # The nav property for @odata.bind is the lookup's Navigation Property Name (case-sensitive)
 ```
 
@@ -252,7 +252,7 @@ When creating or updating a record that sets a lookup field, you must use `@odat
 
 ### How to find the navigation property name
 
-1. **After creating a lookup via SDK**: The `result['lookup_schema_name']` is the navigation property name.
+1. **After creating a lookup via SDK**: `result.lookup_schema_name` is the navigation property name.
 2. **For system tables**: Query the relationship metadata:
    ```
    GET /api/data/v9.2/EntityDefinitions(LogicalName='<entity>')/ManyToOneRelationships?$select=ReferencingEntityNavigationPropertyName,ReferencedEntity
@@ -386,7 +386,7 @@ from PowerPlatform.Dataverse.core.errors import HttpError
 
 load_env()
 client = DataverseClient(
-    resource_url=os.environ["DATAVERSE_URL"],
+    base_url=os.environ["DATAVERSE_URL"],
     credential=get_credential(),
 )
 
@@ -488,7 +488,7 @@ from PowerPlatform.Dataverse.client import DataverseClient
 
 credential = InteractiveBrowserCredential()
 client = DataverseClient(
-    resource_url="https://<org>.crm.dynamics.com",  # replace with your URL
+    base_url="https://<org>.crm.dynamics.com",  # replace with your URL
     credential=credential,
 )
 
