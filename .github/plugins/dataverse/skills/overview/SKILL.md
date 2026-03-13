@@ -22,13 +22,18 @@ These rules are non-negotiable. Violating any of them means the task is going of
 
 ### 0. Check Init State Before Anything Else
 
-Before writing ANY code or creating ANY files, check if the workspace is initialized:
+Before writing ANY code or creating ANY files, check what is already configured:
 
 ```bash
-ls .env scripts/auth.py 2>/dev/null
+ls .env scripts/auth.py .mcp.json 2>/dev/null
 ```
 
-- If BOTH exist: workspace is initialized. Proceed to the relevant task.
+**For MCP-only tasks** (browsing tables, querying records, exploring the environment):
+- If `.mcp.json` exists with a Dataverse server entry (check with `claude mcp list`): MCP is ready. Proceed directly — no need for `.env` or `scripts/auth.py`. The MCP server handles its own authentication.
+- If MCP is not configured: use the `dataverse-mcp-configure` skill. This does not require full workspace init.
+
+**For development tasks** (creating tables, running scripts, building solutions, bulk data operations):
+- If BOTH `.env` AND `scripts/auth.py` exist: workspace is initialized. Proceed.
 - If EITHER is missing: **STOP. Run the init flow first** (see the init skill). Do not create your own `.env`, `requirements.txt`, `.env.example`, or auth scripts. The init skill handles all of this.
 
 Do NOT create `requirements.txt`, `.env.example`, or scaffold files manually. The init flow produces the correct file structure. Skipping init is the #1 cause of broken setups.

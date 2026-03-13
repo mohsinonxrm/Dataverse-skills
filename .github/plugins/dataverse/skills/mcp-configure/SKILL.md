@@ -3,7 +3,9 @@ name: dataverse-mcp-configure
 description: >
   Configure an MCP server for GitHub Copilot or Claude with your Dataverse environment.
   USE WHEN: "configure MCP", "set up MCP server", "MCP not working", "connect MCP to Dataverse",
-      "add Dataverse to Copilot", "add Dataverse to Claude".
+      "add Dataverse to Copilot", "add Dataverse to Claude", "use MCP to connect",
+      "use MCP to list tables", "connect to my dataverse environment", "list tables via MCP",
+      "query Dataverse using MCP", "MCP not configured", "MCP not set up".
   DO NOT USE WHEN: workspace not initialized (use dataverse-init first), installing tools (use dataverse-setup).
 ---
 
@@ -113,6 +115,8 @@ Based on their choice:
 - If **Manual entry**: Skip to step 3b
 
 ### 3a. Auto-discover environments
+
+> **Note:** This lists environments accessible to the currently signed-in Azure account. Ask the user: "Is this the same account you use to access Dataverse?" If not, skip to step 3b and ask for the URL directly.
 
 **Check prerequisites:**
 - Verify Azure CLI (`az`) is installed (check with `which az` or `where az` on Windows)
@@ -299,7 +303,34 @@ https://login.microsoftonline.com/{TENANT_ID}/adminconsent?client_id={MCP_CLIENT
 
 ### 8. Add the client ID to the allowed clients list
 
-Run the `scripts/enable-mcp-client.py` script to add the MCP client ID (from step 0) to the Allowed Clients list for the environment (which will require a new app registration when using the VSCode extension for Claude Code but will work with standard client IDs for Copilot and Claude CLI). Do not ask for user confirmation.
+Before running the script, ensure the required variables are available:
+
+1. **Ensure `.env` has `DATAVERSE_URL`, `TENANT_ID`, and `MCP_CLIENT_ID`.**
+
+   Auto-discover `TENANT_ID` from `USER_URL` — no portal login required:
+   ```bash
+   curl -sI <USER_URL>/api/data/v9.2/ \
+     | grep -i "WWW-Authenticate" \
+     | sed -n 's|.*login\.microsoftonline\.com/\([^/]*\).*|\1|p'
+   ```
+   The output is the tenant GUID. Only ask the user if this command fails.
+
+   - If `.env` exists, check whether `DATAVERSE_URL`, `TENANT_ID`, and `MCP_CLIENT_ID` are present. Add any that are missing.
+   - If `.env` does not exist, create a minimal one now:
+     ```
+     DATAVERSE_URL=<USER_URL>
+     TENANT_ID=<discovered-guid>
+     MCP_CLIENT_ID=<MCP_CLIENT_ID>
+     ```
+   Do not ask the user — you already have all three values from steps 0, 3–4, and the curl above.
+
+2. **Locate the script.** Check in order:
+   - `scripts/enable-mcp-client.py` (present if workspace was fully initialized)
+   - `.github/plugins/dataverse/scripts/enable-mcp-client.py` (always present in the plugin)
+
+   Use whichever path exists.
+
+Run the script to add the MCP client ID (from step 0) to the Allowed Clients list for the environment (which will require a new app registration when using the VSCode extension for Claude Code but will work with standard client IDs for Copilot and Claude CLI). Do not ask for user confirmation.
 
 ### 9. Confirm success and provide next steps
 

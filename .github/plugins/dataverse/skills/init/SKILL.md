@@ -190,6 +190,19 @@ New machine setup is complete.
 
 All commands below can be run directly by Claude — the user does not need to copy-paste or execute anything manually unless they want to.
 
+### 0. Determine scope
+
+Before doing anything, determine what the user actually needs:
+
+- **Explore only** — they want to connect to an existing environment and browse/query data (e.g. "list tables", "query records", "connect to my environment"). Do steps 1–6 then jump to step 11 (MCP). Skip steps 7–10 entirely.
+- **Build a project** — they want to create tables, solutions, custom schema, or deploy code. Do all steps.
+
+If the user's intent is not clear, ask:
+
+> Are you setting up a new development project (creating tables, solutions, custom schema), or do you just want to connect and explore an existing environment?
+
+Use the answer to decide whether to run steps 7–10.
+
 ### 1. Confirm the repo
 
 Verify you are at the repo root.
@@ -260,7 +273,7 @@ pac auth create --name <profile-name>
 
 Continue to the next steps.
 
-### 7. Create the solution and metadata in the environment
+### 7. Create the solution and metadata in the environment *(build-project only — skip if explore only)*
 
 **This is where changes go into Dynamics first — never into the repo directly.**
 
@@ -284,7 +297,7 @@ Then write and run any scripts needed to create tables, columns, or other metada
 python scripts/create_tables.py
 ```
 
-### 8. Pull the environment state to the repo
+### 8. Pull the environment state to the repo *(build-project only — skip if explore only)*
 
 **After all changes are live in the environment, pull them into the repo:**
 
@@ -294,7 +307,7 @@ pac solution unpack --zipfile ./solutions/<SOLUTION_NAME>.zip --folder ./solutio
 rm ./solutions/<SOLUTION_NAME>.zip
 ```
 
-### 9. Load demo data (optional)
+### 9. Load demo data *(optional, build-project only — skip if explore only)*
 
 If the user wants sample data for testing (accounts, contacts, opportunities), use the built-in Dataverse sample data feature:
 
@@ -335,7 +348,7 @@ else:
 
 To remove demo data later, call `UninstallSampleData` the same way.
 
-### 10. Commit
+### 10. Commit *(build-project only — skip if explore only)*
 
 ```
 git add .gitignore CLAUDE.md solutions/ plugins/ scripts/
