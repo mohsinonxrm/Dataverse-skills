@@ -161,11 +161,20 @@ CLIENT_SECRET=<app-registration-secret>
 ```
 
 How to prompt the user:
-- `DATAVERSE_URL`: "What is your Dataverse environment URL?"
-- `TENANT_ID`: Auto-discover from the URL above before asking. Only ask if discovery fails.
-- `SOLUTION_NAME`: "What is the unique name of your solution?"
+- `DATAVERSE_URL`: "What is your Dataverse environment URL?" (e.g., `https://myorg.crm10.dynamics.com`). If the Environment Discovery flow already determined this, use it directly — do not re-ask.
+- `TENANT_ID`: Auto-discover from the `DATAVERSE_URL` using the curl method (see Scenario A step 2). This is preferred over `pac org who` because it derives the tenant directly from the URL — no PAC CLI setup needed, and no risk of returning the wrong tenant when multiple auth profiles exist. Only ask the user if the curl method fails.
+- `SOLUTION_NAME`: "What is the unique name of your solution?" (allow skipping for now)
 - `PUBLISHER_PREFIX`: Do **not** ask yet — this is discovered in the solution creation step (step 7 in Scenario B). Leave it blank in `.env` for now; the `create_solution.py` script will query existing publishers and ask the user. Once confirmed, update `.env` with the chosen prefix.
-- `CLIENT_ID` / `CLIENT_SECRET`: Only needed for service principal auth. If the user authenticates via browser (interactive login), skip these. When omitted, auth.py uses interactive device code flow with AuthenticationRecord persistence (no browser re-prompt on subsequent runs).
+
+**Present authentication options — always ask this explicitly with clear descriptions:**
+
+> How would you like to authenticate with Dataverse?
+>
+> 1. **Interactive login (recommended for personal use)** — Sign in via your browser. No app registration needed. You'll authenticate once and the token stays cached across sessions.
+> 2. **Service principal (for CI/CD or shared environments)** — Uses a CLIENT_ID and CLIENT_SECRET from an Azure app registration. Required for unattended/automated scenarios.
+
+- If **Interactive**: skip `CLIENT_ID` and `CLIENT_SECRET`. `auth.py` uses device code flow with persistent OS-level token caching — no re-prompt on subsequent runs.
+- If **Service principal**: ask for `CLIENT_ID` and `CLIENT_SECRET`.
 
 Write the file directly — do not instruct the user to create it:
 
