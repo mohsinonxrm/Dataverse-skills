@@ -162,7 +162,7 @@ CLIENT_SECRET=<app-registration-secret>
 
 How to prompt the user:
 - `DATAVERSE_URL`: "What is your Dataverse environment URL?" (e.g., `https://myorg.crm10.dynamics.com`). If the Environment Discovery flow already determined this, use it directly — do not re-ask.
-- `TENANT_ID`: Auto-discover from `pac org who` output or the URL. Only ask if discovery fails.
+- `TENANT_ID`: Auto-discover from the `DATAVERSE_URL` using the curl method (see Scenario A step 2). This is preferred over `pac org who` because it derives the tenant directly from the URL — no PAC CLI setup needed, and no risk of returning the wrong tenant when multiple auth profiles exist. Only ask the user if the curl method fails.
 - `SOLUTION_NAME`: "What is the unique name of your solution?" (allow skipping for now)
 - `PUBLISHER_PREFIX`: Do **not** ask yet — this is discovered in the solution creation step (step 7 in Scenario B). Leave it blank in `.env` for now; the `create_solution.py` script will query existing publishers and ask the user. Once confirmed, update `.env` with the chosen prefix.
 
