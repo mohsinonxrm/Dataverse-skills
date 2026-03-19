@@ -31,6 +31,9 @@ Check all tools in parallel. Install any that are missing. See [tools-setup.md](
 | Python 3 | `python --version` |
 | Git | `git --version` |
 | .NET SDK | `dotnet --version` |
+| Azure CLI | `az --version` |
+
+Azure CLI is used as a fallback for environment discovery when PAC CLI isn't available (see [mcp-configuration.md](references/mcp-configuration.md) Step 3b). GitHub CLI is not needed for connecting — it's used later for ALM/CI/CD scenarios (see `dv-solution`).
 
 If any tool is missing, install it (see [tools-setup.md](references/tools-setup.md)), then verify. If `winget` installs a tool but it's not in PATH, ask the user to restart the terminal.
 
@@ -216,51 +219,17 @@ If `list_tables` is called directly → MCP is connected. If the agent falls bac
 | Create or modify a form | Web API (see `dv-metadata`) |
 | Create or modify a view | Web API (see `dv-metadata`) |
 
----
+After verifying MCP works, tell the user:
 
-## Creating a solution (for new projects)
-
-After connection is verified, if the user is starting a new project:
-
-Write and run `scripts/create_solution.py`. The script **must** follow this publisher discovery flow (from `dv-solution`):
-
-1. **Query existing publishers** (excluding Microsoft system publishers)
-2. **If a custom publisher exists**, ask: "Should I reuse this publisher (prefix: `<prefix>_`)?"
-3. **If none exists**, ask: "What publisher prefix should I use? (e.g., `contoso`, `sa`, `lit` — 2-8 lowercase chars, not `new`)"
-4. **Never hardcode a prefix.** Always get user confirmation.
-5. After confirmation, **update `.env`** with `PUBLISHER_PREFIX=<chosen_prefix>`
-
-Then create tables/columns as needed and pull the solution into the repo:
-```
-pac solution export --name <SOLUTION_NAME> --path ./solutions/<SOLUTION_NAME>.zip --managed false
-pac solution unpack --zipfile ./solutions/<SOLUTION_NAME>.zip --folder ./solutions/<SOLUTION_NAME>
-rm ./solutions/<SOLUTION_NAME>.zip
-```
-
-Commit:
-```
-git add .gitignore CLAUDE.md solutions/ plugins/ scripts/
-git commit -m "chore: initialize Dataverse workspace"
-```
-
----
-
-## Loading demo data (optional)
-
-If the user wants sample data (accounts, contacts, opportunities):
-
-```python
-# Check if already installed
-pages = client.records.get("organization", select=["sampledataimported"], top=1)
-orgs = [o for page in pages for o in page]
-if orgs and orgs[0].get("sampledataimported"):
-    print("Demo data already installed.")
-else:
-    # Web API: POST /api/data/v9.2/InstallSampleData with {}
-    print("Demo data installation started. Takes 2-10 minutes.")
-```
-
-To remove demo data later, call `UninstallSampleData` the same way.
+> ✅ Connected to Dataverse at `{DATAVERSE_URL}`. Tools installed, authenticated, MCP live.
+>
+> You can now:
+> - Create tables, columns, and relationships (`dv-metadata`)
+> - Query and manage data (`dv-python-sdk`)
+> - Export and promote solutions (`dv-solution`)
+>
+> To create your first solution, see the `dv-solution` skill.
+> To load sample data (accounts, contacts, opportunities), ask: "Load demo data into my Dataverse environment."
 
 ---
 
