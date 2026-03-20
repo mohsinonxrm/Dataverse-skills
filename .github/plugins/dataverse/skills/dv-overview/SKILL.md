@@ -1,13 +1,13 @@
 ---
 name: dv-overview
 description: >
-  ALWAYS LOAD THIS SKILL FIRST for any Dataverse task. Contains hard rules that override all other skills.
-  USE WHEN: ANY request involving Dataverse, Dynamics 365, Power Platform, tables, columns, solutions,
+  Core rules and tool routing for all Dataverse tasks. Loaded automatically before other skills.
+  Use when: any request involving Dataverse, Dynamics 365, Power Platform, tables, columns, solutions,
   records, queries, CRM, metadata, plugins, SDK, Web API, PAC CLI, or environment operations.
   Also use for: "how do I", "what tool", "which skill", "where do I start", "help with Dataverse",
   "create table", "create column", "build solution", "query data", "bulk import", "sample data",
   "support agent", "customer table", "ticket table".
-  This skill MUST be loaded before any other Dataverse skill. Read the Hard Rules section first.
+  This skill must be loaded before any other Dataverse skill.
 ---
 
 # Skill: Overview — What to Use and When
@@ -184,10 +184,10 @@ Each skill's frontmatter contains WHEN/DO NOT USE WHEN triggers that Claude uses
 
 | Skill | What it covers |
 | --- | --- |
-| **connect** | Connect to Dataverse: install tools, authenticate, create `.env`, configure MCP, verify connection |
-| **metadata** | Create/modify tables, columns, relationships, forms, views via Web API |
-| **python-sdk** | Data CRUD, bulk ops, OData queries, file uploads, bulk import, data profiling, notebook analysis via Python SDK |
-| **solution** | Solution create/export/import/pack/unpack, post-import validation |
+| **dv-connect** | Connect to Dataverse: install tools, authenticate, create `.env`, configure MCP, verify connection |
+| **dv-metadata** | Create/modify tables, columns, relationships, forms, views via Web API |
+| **dv-python-sdk** | Data CRUD, bulk ops, OData queries, file uploads, bulk import, data profiling, notebook analysis via Python SDK |
+| **dv-solution** | Solution create/export/import/pack/unpack, post-import validation |
 
 ---
 
@@ -200,7 +200,7 @@ The plugin ships utility scripts in `scripts/`:
 | `auth.py` | Azure Identity token/credential acquisition — used by all other scripts and the SDK |
 | `enable-mcp-client.py` | Add the MCP Client ID to the list of allowed MCP clients in Dataverse |
 
-For data operations and post-import validation, use the Python SDK directly (inline in your own scripts). See the `python-sdk` skill for SDK patterns and the `solution` skill for validation queries.
+For data operations and post-import validation, use the Python SDK directly (inline in your own scripts). See the `dv-python-sdk` skill for SDK patterns and the `dv-solution` skill for validation queries.
 
 Any Web API call that goes beyond a one-off query should be written as a Python script and committed to `/scripts/`. Use `scripts/auth.py` for token acquisition.
 
@@ -223,7 +223,7 @@ Before creating tables, columns, or other metadata, ensure a solution exists to 
 
 1. Ask the user: "What solution should these components go into?"
 2. If a solution name is in `.env` (`SOLUTION_NAME`), confirm it with the user
-3. If no solution exists yet, create one (see the `solution` skill)
+3. If no solution exists yet, create one (see the `dv-solution` skill)
 4. Use the `MSCRM.SolutionName` header on all Web API metadata calls to auto-add components
 
 Creating metadata without a solution means it exists only in the default solution and cannot be cleanly exported or deployed. Always solution-first.

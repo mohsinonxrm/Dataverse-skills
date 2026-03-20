@@ -89,7 +89,7 @@ Extract all `url` values from the configured servers and store them as `CONFIGUR
 
 If the file doesn't exist or is empty, treat `CONFIGURED_URLS` as empty (`[]`). This step must never block the skill.
 
-If the environment URL from `.env` is already in `CONFIGURED_URLS`, the MCP server is **(already configured)**. Confirm with the user whether they want to re-register it (e.g. to change the endpoint type) before proceeding. If not, skip to the end.
+If the environment URL from `.env` is already in `CONFIGURED_URLS`, the MCP server is **already configured**. Confirm with the user whether they want to re-register it (e.g. to change the endpoint type) before proceeding. If not, skip to the end.
 
 **If TOOL_TYPE is `claude`:**
 

@@ -1,8 +1,8 @@
 ---
 name: dv-connect
 description: >
-  Connect to Dataverse — installs tools, authenticates, configures MCP, and verifies everything works.
-  USE WHEN: "connect to Dataverse", "configure MCP", "set up MCP server", "MCP not working",
+  Connect to a Dataverse environment in one step — installs tools, authenticates, configures MCP, and verifies the connection.
+  Use when: "connect to Dataverse", "configure MCP", "set up MCP server", "MCP not working",
   ".env is missing", "setting up on a new machine", "starting a new project",
   "initialize workspace", "new repo", "first time setup", "install tools",
   "command not found", "missing tools", "new machine setup", "authenticate",
@@ -240,12 +240,8 @@ After verifying MCP works, tell the user:
 
 ---
 
-## GitHub Copilot CLI vs Claude Code CLI
+## Supported Agents
 
-This plugin's skill files are natively loaded by **Claude Code CLI** (installed as a plugin).
+This plugin's skill files are natively loaded by both **GitHub Copilot CLI** and **Claude Code CLI** when installed as a plugin. No manual context-loading is needed — both agents discover and invoke skills automatically.
 
-For **GitHub Copilot CLI** (`gh copilot suggest`), the skill files are not auto-loaded. To use them as context:
-- In VS Code with Copilot agent mode: open the relevant skill file and use `#` to attach it as context
-- In `gh copilot suggest`: paste the relevant section of the skill into your prompt
-
-The PAC CLI commands, Python scripts, and XML templates work identically in both environments — only the context-loading mechanism differs.
+The PAC CLI commands, Python scripts, and XML templates work identically in both environments.
