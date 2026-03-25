@@ -64,9 +64,9 @@ Safety is enforced at two levels: **platform-level** controls that are always on
 - **Dataverse security roles** — every API call is authorized server-side by Dataverse (see [Least-Privilege](#least-privilege--security-role-enforcement) above).
 - **Multi-layer MCP authorization** — MCP access requires developer auth, tenant admin consent, and per-environment allowlisting (see [Authentication](#authentication) above). Other plugin tools (SDK, Web API, PAC CLI) authenticate directly and are not subject to these controls.
 
-### Agent-level (enforced via skill instructions)
+### Agent-level (guardrails in skill instructions)
 
-The plugin's skill definitions instruct AI agents (Claude, Copilot) to follow these mandatory confirmation steps. These are not hard-coded gates in the proxy — they are behavioral rules the agent follows from the skill instructions.
+The plugin's skill definitions instruct AI agents (Claude, Copilot) to follow these confirmation steps. These are not hard-coded gates in the proxy — they are behavioral rules the agent follows from the skill instructions.
 
 #### 1. Environment confirmation
 
